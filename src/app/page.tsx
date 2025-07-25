@@ -1,12 +1,12 @@
 import Link from 'next/link';
 import { Button } from "@/components/ui/Button";
 import { siteData } from "@/data/siteData";
-import { FiStar, FiTruck, FiLeaf, FiCheckCircle } from "react-icons/fi";
+import { FiStar, FiTruck, FiFeather, FiCheckCircle } from "react-icons/fi"; // Changed FiLeaf to FiFeather
 
 export default function HomePage() {
   const trustBadges = [
     { icon: <FiStar className="text-yellow-400"/>, text: "5-Star Google Rating" },
-    { icon: <FiLeaf className="text-primary"/>, text: "Eco-Friendly Disposal" },
+    { icon: <FiFeather className="text-primary"/>, text: "Eco-Friendly Disposal" }, // Changed FiLeaf to FiFeather
     { icon: <FiTruck className="text-secondary"/>, text: "Same-Day Service" },
   ];
 
@@ -23,7 +23,7 @@ export default function HomePage() {
         <div className="absolute inset-0">
           {/* Replace with a high-quality local image of your team/truck */}
           <img 
-            src="https://images.unsplash.com/photo-1615485925576-85f153957874?q=80&w=2940" 
+            src="https://images.unsplash.com/photo-1615485925576-85f1539S57874?q=80&w=2940" 
             alt="Friendly junk removal team in front of a clean truck" 
             className="w-full h-full object-cover opacity-30"
           />
