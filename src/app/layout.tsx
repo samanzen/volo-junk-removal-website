@@ -10,7 +10,8 @@ export const metadata: Metadata = {
     template: `%s | ${siteData.businessName}`,
   },
   description: `Your friendly, reliable choice for junk removal in Coquitlam, Burnaby, Surrey, and across Metro Vancouver. We offer same-day service for furniture, appliances, yard waste, and more. Get your free quote today!`,
-  metadataBase: new URL("https://www.volojunk.ca"), // Placeholder URL
+  // The metadataBase URL needs to be a valid, absolute URL. Using a placeholder.
+  metadataBase: new URL("https://volojunk.ca"),
 };
 
 export default function RootLayout({
