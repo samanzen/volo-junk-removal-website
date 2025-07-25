@@ -1,6 +1,5 @@
 import { Button } from '@/components/ui/Button';
 import { FiCheckCircle } from 'react-icons/fi';
-import Head from 'next/head';
 import type { Metadata } from 'next';
 
 // This data would ideally come from a CMS or a larger data file
@@ -51,12 +50,21 @@ export const metadata: Metadata = {
   description: service.description,
 };
 
+// Function to inject JSON-LD into the page
+function addJsonLd() {
+  return {
+    __html: JSON.stringify(FaqSchema),
+  };
+}
+
 export default function ServicePage() {
   return (
     <>
-      <Head>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(FaqSchema) }} />
-      </Head>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={addJsonLd()}
+        key="faq-jsonld"
+      />
       {/* Service Header */}
       <section className="bg-surface py-16">
         <div className="container mx-auto px-4">
