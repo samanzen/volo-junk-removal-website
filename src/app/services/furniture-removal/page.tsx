@@ -50,19 +50,12 @@ export const metadata: Metadata = {
   description: service.description,
 };
 
-// Function to inject JSON-LD into the page
-function addJsonLd() {
-  return {
-    __html: JSON.stringify(FaqSchema),
-  };
-}
-
 export default function ServicePage() {
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={addJsonLd()}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(FaqSchema) }}
         key="faq-jsonld"
       />
       {/* Service Header */}
