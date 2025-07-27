@@ -17,7 +17,7 @@ interface Service {
 }
 async function getHomepageData() {
   const homepageQuery = `*[_type == "homepage"][0] { heroHeadline, heroSubheadline }`;
-  const servicesQuery = `*[_type == "service"] | order(name asc)[0...7] { name, slug }`; // Get newest 7 services
+  const servicesQuery = `*[_type == "service"] | order(name asc)[0...7] { name, slug }`;
   const homepageContent: HomepageContent = await client.fetch(homepageQuery);
   const services: Service[] = await client.fetch(servicesQuery);
   return { homepageContent, services };
@@ -45,7 +45,7 @@ export default async function HomePage() {
       <section className="relative bg-secondary text-white">
         <div className="absolute inset-0">
           <img 
-            src="https://images.unsplash.com/photo-1624923384206-43b6d07c2d71?q=80&w=2832" 
+            src="https://images.unsplash.com/photo-1574681321055-d3b135823940?q=80&w=2832" 
             alt="The VOLO JUNK REMOVAL team working in front of their truck" 
             className="w-full h-full object-cover"
           />
@@ -110,7 +110,7 @@ export default async function HomePage() {
                   </div>
                   <div className="mt-10 md:mt-0">
                       <img 
-                          src="https://images.unsplash.com/photo-1593113646773-ae6a41b1a24d?q=80&w=2787" 
+                          src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2940" 
                           alt="A VOLO JUNK REMOVAL team member giving a thumbs up"
                           className="rounded-xl shadow-2xl w-full h-auto"
                       />
