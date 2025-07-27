@@ -3,13 +3,11 @@ import { urlFor } from '@/lib/image';
 import { Button } from '@/components/ui/Button';
 import { FiCheckCircle } from 'react-icons/fi';
 import Image from 'next/image';
-import { PortableText } from '@portabletext/react';
 
-// Define the type for a single service
 interface Service {
   name: string;
   description: string;
-  mainImage: any;
+  mainImage?: any; // Image is now optional
   problem?: string;
   agitate?: string;
   solution?: string;
@@ -17,14 +15,12 @@ interface Service {
   faqs?: { question: string; answer: string }[];
 }
 
-// Fetch a single service from Sanity based on the URL slug
 async function getService(slug: string) {
   const query = `*[_type == "service" && slug.current == $slug][0]`;
   const service: Service = await client.fetch(query, { slug });
   return service;
 }
 
-// Generate metadata for SEO
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   const service = await getService(params.slug);
   return {
@@ -37,16 +33,16 @@ export default async function ServicePage({ params }: { params: { slug: string }
   const service = await getService(params.slug);
 
   if (!service) {
-    return <div>Service not found</div>; // Handle case where service doesn't exist
+    return <div>Service not found</div>;
   }
 
   return (
     <>
-      {/* Service Header */}
       <section className="relative bg-secondary text-white py-20 md:py-32">
         <div className="absolute inset-0">
+          {/* This is the fix: Check if an image exists, otherwise use a placeholder */}
           <Image
-            src={urlFor(service.mainImage).width(1200).height(800).url()}
+            src={service.mainImage ? urlFor(service.mainImage).width(1200).height(800).url() : 'https://placehold.co/1200x800/1f2937/ffffff?text=VOLO+JUNK+REMOVAL'}
             alt={`Header image for ${service.name}`}
             fill
             className="object-cover"
@@ -65,7 +61,6 @@ export default async function ServicePage({ params }: { params: { slug: string }
         </div>
       </section>
 
-      {/* PAS Section */}
       {service.problem && (
         <section className="py-20 bg-surface">
           <div className="container mx-auto px-4 max-w-4xl">
@@ -87,7 +82,6 @@ export default async function ServicePage({ params }: { params: { slug: string }
         </section>
       )}
       
-      {/* What We Take Section */}
       {service.itemsWeTake && service.itemsWeTake.length > 0 && (
         <section className="py-20 bg-background">
           <div className="container mx-auto px-4 text-center">
@@ -104,7 +98,6 @@ export default async function ServicePage({ params }: { params: { slug: string }
         </section>
       )}
 
-      {/* FAQ Section */}
       {service.faqs && service.faqs.length > 0 && (
         <section className="py-20 bg-surface">
           <div className="container mx-auto px-4 max-w-3xl">
