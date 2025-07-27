@@ -10,19 +10,21 @@ const config: Config = {
     extend: {
       colors: {
         'primary': {
-          DEFAULT: '#16a34a', // A friendly, trustworthy green
-          'light': '#22c55e',
-          'dark': '#15803d',
+          DEFAULT: '#0d9488', // A strong, modern teal
+          'dark': '#115e59',
         },
         'secondary': {
-          DEFAULT: '#0284c7', // A calm, professional blue
-          'light': '#0ea5e9',
+          DEFAULT: '#1f2937', // A sophisticated dark gray for text
         },
-        'text-main': '#1f2937',     // Dark gray for main text
-        'text-light': '#6b7280',    // Lighter gray for subtext
+        'accent': {
+          DEFAULT: '#f97316', // A vibrant, high-contrast orange for CTAs
+          'dark': '#ea580c',
+        },
         'background': '#ffffff',
-        'surface': '#f9fafb',      // Off-white for card backgrounds
+        'surface': '#f9fafb',      // A very light gray for section backgrounds
         'border': '#e5e7eb',
+        'text-main': '#1f2937',
+        'text-light': '#6b7280',
       },
       fontFamily: {
         sans: ['"Inter"', 'sans-serif'],
