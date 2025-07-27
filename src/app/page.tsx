@@ -3,12 +3,14 @@ import Image from 'next/image';
 import { Button } from "@/components/ui/Button";
 import { siteData } from "@/data/siteData";
 import { client } from '@/lib/sanity';
+import { urlFor } from '@/lib/image'; // Import the image helper
 import { FiStar, FiTruck, FiFeather, FiCheckCircle, FiArrowRight, FiSmile, FiShield, FiHome, FiMessageSquare } from "react-icons/fi";
 
-// --- Data Fetching ---
+// --- Data Fetching (Updated to include heroImage) ---
 interface HomepageContent {
   heroHeadline?: string;
   heroSubheadline?: string;
+  heroImage?: any; // The new hero image field
 }
 interface Service {
   name: string;
@@ -17,7 +19,8 @@ interface Service {
   };
 }
 async function getHomepageData() {
-  const homepageQuery = `*[_type == "homepage"][0] { heroHeadline, heroSubheadline }`;
+  // Updated the query to fetch the heroImage
+  const homepageQuery = `*[_type == "homepage"][0] { heroHeadline, heroSubheadline, heroImage }`;
   const servicesQuery = `*[_type == "service"] | order(name asc)[0...7] { name, slug }`;
   const homepageContent: HomepageContent = await client.fetch(homepageQuery);
   const services: Service[] = await client.fetch(servicesQuery);
@@ -44,9 +47,10 @@ export default async function HomePage() {
     <>
       {/* Hero Section */}
       <section className="relative bg-secondary text-white">
-        {/* THIS IS THE FIX: The Image component is now a direct child of the section, and the extra div is removed. */}
+        {/* This Image component is now fully dynamic */}
         <Image 
-          src="https://images.unsplash.com/photo-1574681321055-d3b135823940?q=80&w=2832" 
+          // It checks if you've uploaded an image. If not, it uses a safe placeholder.
+          src={homepageContent?.heroImage ? urlFor(homepageContent.heroImage).width(2832).url() : "https://images.unsplash.com/photo-1574681321055-d3b135823940?q=80&w=2832"}
           alt="The VOLO JUNK REMOVAL team working in front of their truck" 
           fill
           priority
@@ -59,7 +63,7 @@ export default async function HomePage() {
             {homepageContent?.heroHeadline || "Metro Vancouver's Friendliest Junk Removal"}
           </h1>
           <p className="mt-6 text-lg md:text-xl text-gray-200 max-w-3xl mx-auto drop-shadow-md">
-            {homepageContent?.heroSubheadline || "Same-Day Service. Free, No-Obligation Quotes. We do all the heavy lifting so you don't have to."}
+            {homepageContent?.heroSubheadline || "Same-Day Service. Free, No-Obligation Quotes."}
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button href="/contact" variant="accent" className="text-lg !px-8 !py-4 w-full sm:w-auto">Get My Free Quote</Button>
