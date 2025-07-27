@@ -10,17 +10,15 @@ export const metadata: Metadata = {
   description: `From furniture and appliance removal to full estate cleanouts and shed demolition, VOLO JUNK REMOVAL handles it all. See our full list of services for Metro Vancouver.`,
 };
 
-// Define the type for a service, including the new image
 interface Service {
   name: string;
   slug: {
     current: string;
   };
   description: string;
-  mainImage: any; // Sanity image type
+  mainImage?: any; // Image is now optional
 }
 
-// Fetch all services from Sanity
 async function getServices() {
   const query = `*[_type == "service"] | order(name asc) { name, slug, description, mainImage }`;
   const services: Service[] = await client.fetch(query);
@@ -32,7 +30,6 @@ export default async function ServicesPage() {
 
   return (
     <>
-      {/* Page Header */}
       <section className="bg-surface py-20">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-5xl font-bold font-heading">Our Services</h1>
@@ -42,7 +39,6 @@ export default async function ServicesPage() {
         </div>
       </section>
 
-      {/* Services Grid */}
       <section className="pb-20">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -54,7 +50,8 @@ export default async function ServicesPage() {
               >
                 <div className="relative h-56 w-full">
                   <Image
-                    src={urlFor(service.mainImage).width(400).height(300).url()}
+                    // This is the fix: Check if an image exists, otherwise use a placeholder
+                    src={service.mainImage ? urlFor(service.mainImage).width(400).height(300).url() : 'https://placehold.co/400x300/e2e8f0/64748b?text=Image+Coming+Soon'}
                     alt={`Promotional image for ${service.name} service`}
                     fill
                     className="object-cover"
@@ -74,7 +71,6 @@ export default async function ServicesPage() {
         </div>
       </section>
 
-      {/* Final CTA */}
       <section className="bg-secondary text-white">
         <div className="container mx-auto px-4 py-20 text-center">
             <h2 className="text-3xl md:text-4xl font-bold font-heading">Don't See Your Junk on the List?</h2>
