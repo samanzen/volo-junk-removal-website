@@ -44,17 +44,16 @@ export default async function HomePage() {
     <>
       {/* Hero Section */}
       <section className="relative bg-secondary text-white">
-        <div className="absolute inset-0">
-          {/* This is the corrected Image component. The w-full and h-full classes have been removed. */}
-          <Image 
-            src="https://images.unsplash.com/photo-1574681321055-d3b135823940?q=80&w=2832" 
-            alt="The VOLO JUNK REMOVAL team working in front of their truck" 
-            fill
-            priority
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-secondary/70"></div>
-        </div>
+        {/* THIS IS THE FIX: The Image component is now a direct child of the section, and the extra div is removed. */}
+        <Image 
+          src="https://images.unsplash.com/photo-1574681321055-d3b135823940?q=80&w=2832" 
+          alt="The VOLO JUNK REMOVAL team working in front of their truck" 
+          fill
+          priority
+          className="absolute inset-0 object-cover"
+        />
+        <div className="absolute inset-0 bg-secondary/70"></div>
+        
         <div className="relative z-10 container mx-auto px-4 text-center py-20 md:py-32">
           <h1 className="text-4xl md:text-6xl font-extrabold font-heading text-white drop-shadow-lg">
             {homepageContent?.heroHeadline || "Metro Vancouver's Friendliest Junk Removal"}
