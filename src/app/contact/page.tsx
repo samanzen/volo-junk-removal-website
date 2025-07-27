@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import { siteData } from '@/data/siteData';
-import { FiPhone, FiMail, FiMapPin, FiClock, FiArrowLeft, FiSend, FiCheckCircle } from 'react-icons/fi';
+// This is the line that has been fixed:
+import { FiPhone, FiMail, FiMapPin, FiClock, FiArrowLeft, FiSend, FiCheckCircle, FiMessageSquare } from 'react-icons/fi';
 
 // Define the steps of the form
 const steps = [
