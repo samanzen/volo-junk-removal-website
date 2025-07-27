@@ -1,12 +1,41 @@
 import Link from 'next/link';
 import { Button } from "@/components/ui/Button";
-import { siteData } from "@/data/siteData";
-import { FiStar, FiTruck, FiFeather, FiCheckCircle } from "react-icons/fi"; // Changed FiLeaf to FiFeather
+import { siteData } from "@/data/siteData"; // We still use this for some static data
+import { client } from '@/lib/sanity'; // Import the Sanity client
+import { FiStar, FiTruck, FiFeather, FiCheckCircle } from "react-icons/fi";
 
-export default function HomePage() {
+// Define the types for the data we will fetch from Sanity
+interface HomepageContent {
+  heroHeadline?: string;
+  heroSubheadline?: string;
+}
+
+interface Service {
+  name: string;
+  slug: {
+    current: string;
+  };
+}
+
+// This function fetches the data from Sanity
+async function getHomepageData() {
+  const homepageQuery = `*[_type == "homepage"][0] { heroHeadline, heroSubheadline }`;
+  const servicesQuery = `*[_type == "service"] | order(name asc) { name, slug }`;
+  
+  const homepageContent: HomepageContent = await client.fetch(homepageQuery);
+  const services: Service[] = await client.fetch(servicesQuery);
+
+  return { homepageContent, services };
+}
+
+
+export default async function HomePage() {
+  // Call the function to get the data
+  const { homepageContent, services } = await getHomepageData();
+
   const trustBadges = [
     { icon: <FiStar className="text-yellow-400"/>, text: "5-Star Google Rating" },
-    { icon: <FiFeather className="text-primary"/>, text: "Eco-Friendly Disposal" }, // Changed FiLeaf to FiFeather
+    { icon: <FiFeather className="text-primary"/>, text: "Eco-Friendly Disposal" },
     { icon: <FiTruck className="text-secondary"/>, text: "Same-Day Service" },
   ];
 
@@ -21,16 +50,20 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="relative bg-gray-800 text-white py-20 md:py-32">
         <div className="absolute inset-0">
-          {/* Replace with a high-quality local image of your team/truck */}
           <img 
-            src="https://images.unsplash.com/photo-1615485925576-85f1539S57874?q=80&w=2940" 
+            src="https://images.unsplash.com/photo-1615485925576-85f153957874?q=80&w=2940" 
             alt="Friendly junk removal team in front of a clean truck" 
             className="w-full h-full object-cover opacity-30"
           />
         </div>
         <div className="relative container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-6xl font-extrabold font-heading text-white">Metro Vancouver's Friendliest Junk Removal</h1>
-          <p className="mt-4 text-lg md:text-xl text-gray-200 max-w-3xl mx-auto">Same-Day Service. Free, No-Obligation Quotes. We do all the heavy lifting so you don't have to.</p>
+          {/* This text now comes from your Sanity dashboard! */}
+          <h1 className="text-4xl md:text-6xl font-extrabold font-heading text-white">
+            {homepageContent?.heroHeadline || "Metro Vancouver's Friendliest Junk Removal"}
+          </h1>
+          <p className="mt-4 text-lg md:text-xl text-gray-200 max-w-3xl mx-auto">
+            {homepageContent?.heroSubheadline || "Same-Day Service. Free, No-Obligation Quotes."}
+          </p>
           <div className="mt-8">
             <Button href="/contact" className="text-xl">Get My Free Quote</Button>
           </div>
@@ -63,14 +96,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Services Section */}
+      {/* Services Section - This now comes from your Sanity dashboard! */}
       <section className="py-16">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold">What We Take</h2>
           <p className="mt-4 text-lg text-text-light max-w-2xl mx-auto">We can haul away almost anything! Here are some of our most popular services.</p>
           <div className="mt-12 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
-            {siteData.services.map((service) => (
-              <Link href={service.href} key={service.name} className="group block p-6 bg-surface rounded-lg text-center hover:bg-primary hover:text-white transition-all transform hover:-translate-y-1 shadow-sm hover:shadow-xl">
+            {services.map((service) => (
+              <Link href={`/services/${service.slug.current}`} key={service.name} className="group block p-6 bg-surface rounded-lg text-center hover:bg-primary hover:text-white transition-all transform hover:-translate-y-1 shadow-sm hover:shadow-xl">
                 <FiCheckCircle className="text-3xl text-primary mx-auto mb-3 group-hover:text-white transition-colors"/>
                 <h3 className="text-lg font-semibold">{service.name}</h3>
               </Link>
