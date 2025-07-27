@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image'; // Import the Next.js Image component
 import { Button } from "@/components/ui/Button";
 import { siteData } from "@/data/siteData";
 import { client } from '@/lib/sanity';
@@ -44,9 +45,12 @@ export default async function HomePage() {
       {/* Hero Section */}
       <section className="relative bg-secondary text-white">
         <div className="absolute inset-0">
-          <img 
+          {/* This is the corrected Image component */}
+          <Image 
             src="https://images.unsplash.com/photo-1574681321055-d3b135823940?q=80&w=2832" 
             alt="The VOLO JUNK REMOVAL team working in front of their truck" 
+            fill
+            priority
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-secondary/70"></div>
@@ -109,9 +113,11 @@ export default async function HomePage() {
                       </ul>
                   </div>
                   <div className="mt-10 md:mt-0">
-                      <img 
+                      <Image 
                           src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2940" 
                           alt="A VOLO JUNK REMOVAL team member giving a thumbs up"
+                          width={800}
+                          height={600}
                           className="rounded-xl shadow-2xl w-full h-auto"
                       />
                   </div>
