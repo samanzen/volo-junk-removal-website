@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { FiUsers, FiHeart, FiGlobe, FiSmile, FiShield, FiHome } from 'react-icons/fi';
+import { FiSmile, FiShield, FiGlobe } from 'react-icons/fi';
 import { Button } from '@/components/ui/Button';
 import Image from 'next/image';
 
@@ -53,9 +53,8 @@ export default function AboutPage() {
               </p>
             </div>
             <div className="order-1 md:order-2">
-              {/* IMPORTANT: Replace with a real photo of you, the owner */}
               <Image 
-                src="https://images.unsplash.com/photo-1557862921-37829c790f19?q=80&w=800" 
+                src="https://images.unsplash.com/photo-1556157382-97eda2d62296?q=80&w=800" 
                 alt="Owner of VOLO JUNK REMOVAL" 
                 width={800}
                 height={800}
@@ -89,9 +88,8 @@ export default function AboutPage() {
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
              <div>
-              {/* IMPORTANT: Replace with a photo of your team or truck */}
               <Image 
-                src="https://images.unsplash.com/photo-1624923384206-43b6d07c2d71?q=80&w=800" 
+                src="https://images.unsplash.com/photo-1605152276397-91a57ed93524?q=80&w=800" 
                 alt="The VOLO JUNK REMOVAL team" 
                 width={800}
                 height={800}
