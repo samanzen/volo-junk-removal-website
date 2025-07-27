@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Image from 'next/image'; // Import the Next.js Image component
+import Image from 'next/image';
 import { Button } from "@/components/ui/Button";
 import { siteData } from "@/data/siteData";
 import { client } from '@/lib/sanity';
@@ -45,13 +45,13 @@ export default async function HomePage() {
       {/* Hero Section */}
       <section className="relative bg-secondary text-white">
         <div className="absolute inset-0">
-          {/* This is the corrected Image component */}
+          {/* This is the corrected Image component. The w-full and h-full classes have been removed. */}
           <Image 
             src="https://images.unsplash.com/photo-1574681321055-d3b135823940?q=80&w=2832" 
             alt="The VOLO JUNK REMOVAL team working in front of their truck" 
             fill
             priority
-            className="w-full h-full object-cover"
+            className="object-cover"
           />
           <div className="absolute inset-0 bg-secondary/70"></div>
         </div>
